@@ -84,41 +84,46 @@ const CreateProductScreen = () => {
 		]);
 	};
 
-	<View style={styles.container}>
-		<Stack.Screen
-			options={{ title: isUpdating ? "Update product" : "Create product" }}
-		/>
+	return (
+		<View style={styles.container}>
+			<Stack.Screen
+				options={{ title: isUpdating ? "Update product" : "Create product" }}
+			/>
 
-		<Image source={{ uri: image || defaultPizzaImage }} style={styles.image} />
-		<Text onPress={pickImage} style={styles.textButton}>
-			Select image
-		</Text>
-
-		<Text style={styles.label}>Name</Text>
-		<TextInput
-			value={name}
-			onChangeText={setName}
-			placeholder="name"
-			style={styles.input}
-		/>
-
-		<Text style={styles.label}>Price ($)</Text>
-		<TextInput
-			value={price}
-			onChangeText={setPrice}
-			placeholder="9.99"
-			style={styles.input}
-			keyboardType="numeric"
-		/>
-
-		<Text style={{ color: "red" }}>{errors}</Text>
-		<Button onPress={onSubmit} text={isUpdating ? "Update" : "Create"} />
-		{isUpdating && (
-			<Text onPress={confirmDelete} style={styles.textButton}>
-				Delete
+			<Image
+				source={{ uri: image || defaultPizzaImage }}
+				style={styles.image}
+			/>
+			<Text onPress={pickImage} style={styles.textButton}>
+				Select image
 			</Text>
-		)}
-	</View>;
+
+			<Text style={styles.label}>Name</Text>
+			<TextInput
+				value={name}
+				onChangeText={setName}
+				placeholder="name"
+				style={styles.input}
+			/>
+
+			<Text style={styles.label}>Price ($)</Text>
+			<TextInput
+				value={price}
+				onChangeText={setPrice}
+				placeholder="9.99"
+				style={styles.input}
+				keyboardType="numeric"
+			/>
+
+			<Text style={{ color: "red" }}>{errors}</Text>
+			<Button onPress={onSubmit} text={isUpdating ? "Update" : "Create"} />
+			{isUpdating && (
+				<Text onPress={confirmDelete} style={styles.textButton}>
+					Delete
+				</Text>
+			)}
+		</View>
+	);
 };
 
 export default CreateProductScreen;
