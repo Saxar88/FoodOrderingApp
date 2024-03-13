@@ -1,9 +1,17 @@
-import { View, Text } from "react-native";
+import { Link, Redirect } from "expo-router";
 import React from "react";
+import { ActivityIndicator, View } from "react-native";
+
 import Button from "../components/Button";
-import { Link } from "expo-router";
+import { useAuth } from "../providers/AuthProvider";
 
 const index = () => {
+	const { session, loading } = useAuth();
+
+	if (loading) return <ActivityIndicator />;
+
+	if (!session) return <Redirect href={"/sign-in"} />;
+
 	return (
 		<View style={{ flex: 1, justifyContent: "center", padding: 10 }}>
 			<Link href={"/(user)"} asChild>

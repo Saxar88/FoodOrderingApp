@@ -1,10 +1,11 @@
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Tabs } from "expo-router";
+import { Redirect, Tabs } from "expo-router";
 
 import Colors from "@/src/constants/Colors";
 import { useColorScheme } from "@/src/components/useColorScheme";
 import { useClientOnlyValue } from "@/src/components/useClientOnlyValue";
+import { useAuth } from "@/src/providers/AuthProvider";
 
 function TabBarIcon(props: {
 	name: React.ComponentProps<typeof FontAwesome>["name"];
@@ -14,7 +15,10 @@ function TabBarIcon(props: {
 }
 
 export default function TabLayout() {
+	const { session } = useAuth();
 	const colorScheme = useColorScheme();
+
+	if (!session) return <Redirect href={"/"} />;
 
 	return (
 		<Tabs
