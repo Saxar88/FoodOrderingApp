@@ -1,9 +1,15 @@
-import { FlatList, StyleSheet, Text } from "react-native";
+import { ActivityIndicator, FlatList, Text } from "react-native";
 
 import OrderListItem from "@/src/components/OrderListItem";
-import orders from "@/assets/data/orders";
+import { useUserOrderList } from "@/src/api/orders";
 
 export default function OrdersScreen() {
+	const { data: orders, isLoading, error } = useUserOrderList();
+
+	if (isLoading) return <ActivityIndicator />;
+
+	if (error) return <Text>Failed to fetch data!</Text>;
+
 	return (
 		<FlatList
 			data={orders}
@@ -11,20 +17,3 @@ export default function OrdersScreen() {
 		/>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		alignItems: "center",
-		justifyContent: "center",
-	},
-	title: {
-		fontSize: 20,
-		fontWeight: "bold",
-	},
-	separator: {
-		marginVertical: 30,
-		height: 1,
-		width: "80%",
-	},
-});
