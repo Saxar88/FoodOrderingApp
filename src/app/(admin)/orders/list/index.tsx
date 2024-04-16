@@ -2,6 +2,7 @@ import { ActivityIndicator, FlatList, Text } from "react-native";
 
 import OrderListItem from "@/src/components/OrderListItem";
 import { useAdminOrderList } from "@/src/api/orders";
+import { useInsertOrderSubscription } from "@/src/api/orders/subscriptions";
 
 export default function OrdersScreen() {
 	const {
@@ -9,6 +10,8 @@ export default function OrdersScreen() {
 		isLoading,
 		error,
 	} = useAdminOrderList({ archived: false });
+
+	useInsertOrderSubscription();
 
 	if (isLoading) return <ActivityIndicator />;
 
