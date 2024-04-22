@@ -5,6 +5,7 @@ import { useRouter } from "expo-router";
 import { CartItem, Tables } from "../types";
 import { useInsertOrder } from "../api/orders";
 import { useInsertOrderItems } from "../api/order-items";
+import { initialisePaymentSheet, openPaymentSheet } from "../lib/stripe";
 
 type CartType = {
 	items: CartItem[];
@@ -87,7 +88,12 @@ const CartProvider = ({ children }: PropsWithChildren) => {
 		});
 	};
 
-	const checkout = () => {
+	const checkout = async () => {
+		await initialisePaymentSheet(Math.floor(total * 100));
+		const payed = await openPaymentSheet();
+
+		if (!payed) return;
+
 		insertOrder(
 			{ total },
 			{
